@@ -14,20 +14,30 @@ type Calc struct {
 }
 
 func main() {
+	var counter int
+	for {
+		counter = 0
+		fmt.Println("random vlaues -> type 1 \nvalues from csv -> type 2")
+		var input int = 0
+		fmt.Printf(">>")
+		fmt.Scanln(&input)
+		if input == 1 {
+			var randoemValue = generateOutPut()
+			handleOutput(randoemValue)
+		} else if input == 2 {
+			var values = readCSV("./test.csv")
+			handleOutput(values)
+		} else {
+			fmt.Println("okay, bye!")
+			os.Exit(3)
+		}
 
-	fmt.Println("random vlaues -> type 1 \nvalues from csv -> type 2")
-	var input int = 0
-	fmt.Printf(">>")
-	fmt.Scanln(&input)
-	if input == 1 {
-		var randoemValue = generateOutPut()
-		fmt.Println(randoemValue)
-	} else if input == 2 {
-		var values = readCSV("./test.csv")
-		fmt.Println(values)
-	} else {
-		fmt.Println("okay, bey!")
-		os.Exit(3)
+		if resultOutput(counter) {
+			continue
+		} else {
+			fmt.Println("bye")
+			break
+		}
 	}
 
 }
@@ -57,4 +67,37 @@ func generateOutPut() []Calc {
 	}
 	return values
 
+}
+
+func handleOutput(data []Calc) int {
+	var counter = 0
+	for _, ele := range data {
+		fmt.Println(ele.Show)
+		var input int = 0
+		fmt.Printf(">>")
+		fmt.Scanln(&input)
+		if input == ele.Res {
+			counter++
+		}
+	}
+	return counter
+}
+
+func resultOutput(counter int) bool {
+	if counter <= 5 {
+		fmt.Println("you are really stupid")
+	} else if counter > 5 && counter <= 8 {
+		fmt.Println("ok")
+	} else if counter > 8 {
+		fmt.Println("okok")
+	}
+	fmt.Println("would you like to do it again? (y n)")
+	var input string
+	fmt.Printf(">> ")
+	fmt.Scanln(&input)
+	if input == "y" {
+		return true
+	} else {
+		return false
+	}
 }
