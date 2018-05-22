@@ -32,7 +32,16 @@ func readCSV(path string) []Calc {
 	return values
 }
 
-func wirteCSV() {
+func wirteCSV(data []string) {
+	file, err := os.OpenFile("result.csv", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+	checkErr(err)
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	errr := writer.Write(data)
+	checkErr(errr)
 
 }
 

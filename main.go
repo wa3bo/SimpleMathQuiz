@@ -13,26 +13,36 @@ type Calc struct {
 	Show string
 }
 
+type User struct {
+	counter  int
+	username string
+}
+
 func main() {
-	var counter int
+	//var counter int
+	var person User
 	for {
-		counter = 0
+		person.counter = 0
+		fmt.Println("your username: ")
+		fmt.Printf(">> ")
+		fmt.Scanln(&person.username)
+
 		fmt.Println("random vlaues -> type 1 \nvalues from csv -> type 2")
 		var input int = 0
 		fmt.Printf(">>")
 		fmt.Scanln(&input)
 		if input == 1 {
 			var randoemValue = generateOutPut()
-			handleOutput(randoemValue)
+			person.counter = handleOutput(randoemValue)
 		} else if input == 2 {
 			var values = readCSV("./test.csv")
-			handleOutput(values)
+			person.counter = handleOutput(values)
 		} else {
 			fmt.Println("okay, bye!")
 			os.Exit(3)
 		}
-
-		if resultOutput(counter) {
+		wirteCSV([]string{strconv.Itoa(person.counter), person.username})
+		if resultOutput(person.counter) {
 			continue
 		} else {
 			fmt.Println("bye")
